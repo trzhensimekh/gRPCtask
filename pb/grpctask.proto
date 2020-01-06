@@ -3,11 +3,34 @@ syntax="proto3";
 package grpctask;
 
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 service UserService {
     rpc ListUsers(Request) returns (Response) {
         option (google.api.http) = {
 			get: "/users"
+		};
+    }
+    rpc CreateUser(User) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+			post: "/users"
+			body:"*"
+		};
+    }
+    rpc UpdatedByID(EditRequest) returns (User) {
+        option (google.api.http) = {
+			put: "/users/{user.Id}"
+			body:"user"
+		};
+    }
+    rpc DeletedByID(EditRequest) returns (User) {
+        option (google.api.http) = {
+			delete: "/users/{user.Id}"
+		};
+    }
+    rpc FindByID(EditRequest) returns (User) {
+        option (google.api.http) = {
+			get: "/users/{user.Id}"
 		};
     }
 }
@@ -26,3 +49,8 @@ message Request {
 message Response {
     repeated User Users = 1;
 }
+
+message EditRequest {
+    User user =1;
+}
+
