@@ -1,0 +1,16 @@
+version: "3"
+services:
+  db:
+    image: "postgres"
+    container_name: "my_postgres"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./dbscripts:/docker-entrypoint-initdb.d
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:

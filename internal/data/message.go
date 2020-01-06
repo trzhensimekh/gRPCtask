@@ -26,7 +26,7 @@ type IMsgData interface {
 
 func NewMsgData() *msgData {
 
-	db, err := (&Store{}).Open()
+	db, err := Open()
 	if err != nil {
 		log.Fatal(err)
 	}

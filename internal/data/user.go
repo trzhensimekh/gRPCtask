@@ -26,15 +26,15 @@ type IUserData interface {
 }
 
 func NewUserData() *userData {
-	db, err := (&Store{}).Open()
+	db, err := Open()
 	if err != nil {
 		log.Fatal(err)
 	}
 	return &userData{db: db}
 }
 
-func (*User) GetUsers() ([]User, error) {
-	var users []User
+func GetUsers() ([]*User, error) {
+	var users []*User
 	u := new(User)
 	db := NewUserData().db
 	defer db.Close()
@@ -53,7 +53,7 @@ func (*User) GetUsers() ([]User, error) {
 		if err != nil {
 			fmt.Println(err.Error())
 		}
-		users = append(users, *u)
+		users = append(users, u)
 	}
 	return users, nil
 }

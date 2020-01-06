@@ -1,0 +1,28 @@
+syntax="proto3";
+
+package grpctask;
+
+import "google/api/annotations.proto";
+
+service UserService {
+    rpc ListUsers(Request) returns (Response) {
+        option (google.api.http) = {
+			get: "/users"
+		};
+    }
+}
+
+message User {
+    int64 Id = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    string Email =4;
+}
+
+message Request {
+    string name =1;
+}
+
+message Response {
+    repeated User Users = 1;
+}
