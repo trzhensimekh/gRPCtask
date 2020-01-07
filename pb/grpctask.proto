@@ -6,33 +6,61 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 service UserService {
-    rpc ListUsers(Request) returns (Response) {
+    rpc ListUsers (Request) returns (UserResponse) {
         option (google.api.http) = {
 			get: "/users"
 		};
     }
-    rpc CreateUser(User) returns (google.protobuf.Empty) {
+    rpc CreateUser (User) returns (google.protobuf.Empty) {
         option (google.api.http) = {
 			post: "/users"
 			body:"*"
 		};
     }
-    rpc UpdatedByID(EditRequest) returns (User) {
+    rpc UpdatedByID (UserRequest) returns (User) {
         option (google.api.http) = {
 			put: "/users/{user.Id}"
 			body:"user"
 		};
     }
-    rpc DeletedByID(EditRequest) returns (User) {
+    rpc DeletedByID (UserRequest) returns (User) {
         option (google.api.http) = {
 			delete: "/users/{user.Id}"
 		};
     }
-    rpc FindByID(EditRequest) returns (User) {
+    rpc FindByID (UserRequest) returns (User) {
         option (google.api.http) = {
 			get: "/users/{user.Id}"
 		};
     }
+    rpc GetUserMsg (MessageRequest) returns (MessageResponse) {
+        option (google.api.http) = {
+			get: "/users/{message.UserId}/messages"
+		};
+    }
+    rpc FindMsgByID (MessageRequest) returns (Message) {
+    option (google.api.http) = {
+			get: "/users/{message.UserId}/messages/{message.Id}"
+		};
+    }
+    rpc CreateMessage (MessageRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+			post: "/users/{message.UserId}/messages"
+			body:"message"
+		};
+    }
+    rpc UpdateMsgByID (MessageRequest) returns (Message) {
+        option (google.api.http) = {
+			put: "/users/{message.UserId}/messages/{message.Id}"
+			body:"message"
+		};
+    }
+    rpc DeletedMsgByID (MessageRequest) returns (Message) {
+        option (google.api.http) = {
+			delete: "/users/{message.UserId}/messages/{message.Id}"
+		};
+    }
+
 }
 
 message User {
@@ -42,15 +70,27 @@ message User {
     string Email =4;
 }
 
-message Request {
-    string name =1;
+message Message {
+    int64 Id = 1;
+    string Message = 2;
+    int64 UserId = 3;
 }
 
-message Response {
+message Request {}
+
+message UserResponse {
     repeated User Users = 1;
 }
 
-message EditRequest {
+message UserRequest {
     User user =1;
+}
+
+message MessageResponse {
+    repeated Message messages = 1;
+}
+
+message MessageRequest {
+    Message message =1;
 }
 

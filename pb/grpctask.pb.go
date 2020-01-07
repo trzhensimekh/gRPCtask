@@ -89,8 +89,62 @@ func (m *User) GetEmail() string {
 	return ""
 }
 
+type Message struct {
+	Id                   int64    `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	Message              string   `protobuf:"bytes,2,opt,name=Message,proto3" json:"Message,omitempty"`
+	UserId               int64    `protobuf:"varint,3,opt,name=UserId,proto3" json:"UserId,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Message) Reset()         { *m = Message{} }
+func (m *Message) String() string { return proto.CompactTextString(m) }
+func (*Message) ProtoMessage()    {}
+func (*Message) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0f4e05a9a5a53bfd, []int{1}
+}
+
+func (m *Message) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Message.Unmarshal(m, b)
+}
+func (m *Message) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Message.Marshal(b, m, deterministic)
+}
+func (m *Message) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Message.Merge(m, src)
+}
+func (m *Message) XXX_Size() int {
+	return xxx_messageInfo_Message.Size(m)
+}
+func (m *Message) XXX_DiscardUnknown() {
+	xxx_messageInfo_Message.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Message proto.InternalMessageInfo
+
+func (m *Message) GetId() int64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *Message) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *Message) GetUserId() int64 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
 type Request struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -100,7 +154,7 @@ func (m *Request) Reset()         { *m = Request{} }
 func (m *Request) String() string { return proto.CompactTextString(m) }
 func (*Request) ProtoMessage()    {}
 func (*Request) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0f4e05a9a5a53bfd, []int{1}
+	return fileDescriptor_0f4e05a9a5a53bfd, []int{2}
 }
 
 func (m *Request) XXX_Unmarshal(b []byte) error {
@@ -121,127 +175,212 @@ func (m *Request) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Request proto.InternalMessageInfo
 
-func (m *Request) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-type Response struct {
+type UserResponse struct {
 	Users                []*User  `protobuf:"bytes,1,rep,name=Users,proto3" json:"Users,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Response) Reset()         { *m = Response{} }
-func (m *Response) String() string { return proto.CompactTextString(m) }
-func (*Response) ProtoMessage()    {}
-func (*Response) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0f4e05a9a5a53bfd, []int{2}
+func (m *UserResponse) Reset()         { *m = UserResponse{} }
+func (m *UserResponse) String() string { return proto.CompactTextString(m) }
+func (*UserResponse) ProtoMessage()    {}
+func (*UserResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0f4e05a9a5a53bfd, []int{3}
 }
 
-func (m *Response) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Response.Unmarshal(m, b)
+func (m *UserResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserResponse.Unmarshal(m, b)
 }
-func (m *Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Response.Marshal(b, m, deterministic)
+func (m *UserResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserResponse.Marshal(b, m, deterministic)
 }
-func (m *Response) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Response.Merge(m, src)
+func (m *UserResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserResponse.Merge(m, src)
 }
-func (m *Response) XXX_Size() int {
-	return xxx_messageInfo_Response.Size(m)
+func (m *UserResponse) XXX_Size() int {
+	return xxx_messageInfo_UserResponse.Size(m)
 }
-func (m *Response) XXX_DiscardUnknown() {
-	xxx_messageInfo_Response.DiscardUnknown(m)
+func (m *UserResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Response proto.InternalMessageInfo
+var xxx_messageInfo_UserResponse proto.InternalMessageInfo
 
-func (m *Response) GetUsers() []*User {
+func (m *UserResponse) GetUsers() []*User {
 	if m != nil {
 		return m.Users
 	}
 	return nil
 }
 
-type EditRequest struct {
+type UserRequest struct {
 	User                 *User    `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *EditRequest) Reset()         { *m = EditRequest{} }
-func (m *EditRequest) String() string { return proto.CompactTextString(m) }
-func (*EditRequest) ProtoMessage()    {}
-func (*EditRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0f4e05a9a5a53bfd, []int{3}
+func (m *UserRequest) Reset()         { *m = UserRequest{} }
+func (m *UserRequest) String() string { return proto.CompactTextString(m) }
+func (*UserRequest) ProtoMessage()    {}
+func (*UserRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0f4e05a9a5a53bfd, []int{4}
 }
 
-func (m *EditRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_EditRequest.Unmarshal(m, b)
+func (m *UserRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserRequest.Unmarshal(m, b)
 }
-func (m *EditRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_EditRequest.Marshal(b, m, deterministic)
+func (m *UserRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserRequest.Marshal(b, m, deterministic)
 }
-func (m *EditRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EditRequest.Merge(m, src)
+func (m *UserRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserRequest.Merge(m, src)
 }
-func (m *EditRequest) XXX_Size() int {
-	return xxx_messageInfo_EditRequest.Size(m)
+func (m *UserRequest) XXX_Size() int {
+	return xxx_messageInfo_UserRequest.Size(m)
 }
-func (m *EditRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_EditRequest.DiscardUnknown(m)
+func (m *UserRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_EditRequest proto.InternalMessageInfo
+var xxx_messageInfo_UserRequest proto.InternalMessageInfo
 
-func (m *EditRequest) GetUser() *User {
+func (m *UserRequest) GetUser() *User {
 	if m != nil {
 		return m.User
 	}
 	return nil
 }
 
+type MessageResponse struct {
+	Messages             []*Message `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *MessageResponse) Reset()         { *m = MessageResponse{} }
+func (m *MessageResponse) String() string { return proto.CompactTextString(m) }
+func (*MessageResponse) ProtoMessage()    {}
+func (*MessageResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0f4e05a9a5a53bfd, []int{5}
+}
+
+func (m *MessageResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_MessageResponse.Unmarshal(m, b)
+}
+func (m *MessageResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_MessageResponse.Marshal(b, m, deterministic)
+}
+func (m *MessageResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MessageResponse.Merge(m, src)
+}
+func (m *MessageResponse) XXX_Size() int {
+	return xxx_messageInfo_MessageResponse.Size(m)
+}
+func (m *MessageResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MessageResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MessageResponse proto.InternalMessageInfo
+
+func (m *MessageResponse) GetMessages() []*Message {
+	if m != nil {
+		return m.Messages
+	}
+	return nil
+}
+
+type MessageRequest struct {
+	Message              *Message `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MessageRequest) Reset()         { *m = MessageRequest{} }
+func (m *MessageRequest) String() string { return proto.CompactTextString(m) }
+func (*MessageRequest) ProtoMessage()    {}
+func (*MessageRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0f4e05a9a5a53bfd, []int{6}
+}
+
+func (m *MessageRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_MessageRequest.Unmarshal(m, b)
+}
+func (m *MessageRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_MessageRequest.Marshal(b, m, deterministic)
+}
+func (m *MessageRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MessageRequest.Merge(m, src)
+}
+func (m *MessageRequest) XXX_Size() int {
+	return xxx_messageInfo_MessageRequest.Size(m)
+}
+func (m *MessageRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MessageRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MessageRequest proto.InternalMessageInfo
+
+func (m *MessageRequest) GetMessage() *Message {
+	if m != nil {
+		return m.Message
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*User)(nil), "grpctask.User")
+	proto.RegisterType((*Message)(nil), "grpctask.Message")
 	proto.RegisterType((*Request)(nil), "grpctask.Request")
-	proto.RegisterType((*Response)(nil), "grpctask.Response")
-	proto.RegisterType((*EditRequest)(nil), "grpctask.EditRequest")
+	proto.RegisterType((*UserResponse)(nil), "grpctask.UserResponse")
+	proto.RegisterType((*UserRequest)(nil), "grpctask.UserRequest")
+	proto.RegisterType((*MessageResponse)(nil), "grpctask.MessageResponse")
+	proto.RegisterType((*MessageRequest)(nil), "grpctask.MessageRequest")
 }
 
 func init() { proto.RegisterFile("pb/grpctask.proto", fileDescriptor_0f4e05a9a5a53bfd) }
 
 var fileDescriptor_0f4e05a9a5a53bfd = []byte{
-	// 392 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x90, 0xcf, 0xae, 0xd2, 0x40,
-	0x14, 0xc6, 0xd3, 0x3f, 0xf7, 0x5a, 0x4e, 0x13, 0x22, 0x27, 0x6a, 0x9a, 0x7a, 0x35, 0x64, 0xe2,
-	0x82, 0xdc, 0x45, 0xab, 0xb8, 0x63, 0x89, 0x80, 0x69, 0x24, 0x2c, 0xaa, 0x3c, 0xc0, 0x40, 0x0f,
-	0x64, 0x22, 0xb4, 0xb5, 0x33, 0x35, 0x21, 0xc6, 0x8d, 0x7b, 0x57, 0x3e, 0x9a, 0xaf, 0xe0, 0x83,
-	0x98, 0xce, 0x94, 0x3f, 0xca, 0x4a, 0x57, 0xed, 0x77, 0xbe, 0xf9, 0x7e, 0x33, 0xe7, 0x83, 0x5e,
-	0xb9, 0x8a, 0xb7, 0x55, 0xb9, 0x56, 0x5c, 0x7e, 0x8c, 0xca, 0xaa, 0x50, 0x05, 0x7a, 0x47, 0x1d,
-	0xde, 0x6d, 0x8b, 0x62, 0xbb, 0xa3, 0x98, 0x97, 0x22, 0xe6, 0x79, 0x5e, 0x28, 0xae, 0x44, 0x91,
-	0x4b, 0x73, 0x2e, 0x7c, 0xda, 0xba, 0x5a, 0xad, 0xea, 0x4d, 0x4c, 0xfb, 0x52, 0x1d, 0x8c, 0xc9,
-	0x36, 0xe0, 0x2e, 0x25, 0x55, 0xd8, 0x05, 0x3b, 0xc9, 0x02, 0xab, 0x6f, 0x0d, 0x9c, 0xd4, 0x4e,
-	0x32, 0xbc, 0x83, 0xce, 0x4c, 0x54, 0x52, 0x2d, 0xf8, 0x9e, 0x02, 0xbb, 0x6f, 0x0d, 0x3a, 0xe9,
-	0x79, 0x80, 0x21, 0x78, 0x73, 0xde, 0x9a, 0x8e, 0x36, 0x4f, 0x1a, 0x1f, 0xc1, 0xcd, 0x74, 0xcf,
-	0xc5, 0x2e, 0x70, 0xb5, 0x61, 0x04, 0x7b, 0x06, 0x0f, 0x52, 0xfa, 0x54, 0x93, 0x54, 0x88, 0xe0,
-	0xe6, 0x4d, 0xd0, 0xd2, 0xbe, 0xfe, 0x67, 0x2f, 0xc1, 0x4b, 0x49, 0x96, 0x45, 0x2e, 0x09, 0x5f,
-	0xc0, 0x4d, 0xf3, 0x24, 0x19, 0x58, 0x7d, 0x67, 0xe0, 0x0f, 0xbb, 0xd1, 0x69, 0xef, 0x66, 0x9c,
-	0x1a, 0x93, 0xbd, 0x02, 0x7f, 0x9a, 0x09, 0x75, 0x84, 0x32, 0x70, 0x6b, 0x49, 0x95, 0x86, 0x5e,
-	0x67, 0xb4, 0x37, 0xfc, 0xee, 0x80, 0xdf, 0xc8, 0xf7, 0x54, 0x7d, 0x16, 0x6b, 0xc2, 0x31, 0x74,
-	0xe6, 0x42, 0x2a, 0xcd, 0xc3, 0xde, 0x39, 0xd2, 0x32, 0x43, 0xbc, 0x1c, 0x99, 0xc7, 0xb1, 0xee,
-	0xb7, 0x9f, 0xbf, 0x7e, 0xd8, 0x1e, 0xde, 0xc6, 0xb5, 0x8e, 0xbd, 0x05, 0x78, 0x53, 0x11, 0x57,
-	0x64, 0x5a, 0xfc, 0xf3, 0xde, 0xf0, 0x49, 0x64, 0xba, 0x8f, 0x8e, 0xdd, 0x47, 0xd3, 0xa6, 0x7b,
-	0xd6, 0xd3, 0x14, 0x9f, 0xb5, 0x94, 0x91, 0x75, 0x8f, 0x1f, 0xc0, 0x5f, 0x96, 0x19, 0x57, 0x94,
-	0x8d, 0x0f, 0xc9, 0x04, 0x1f, 0x9f, 0x49, 0x17, 0x6b, 0x86, 0x7f, 0x5d, 0xc0, 0x9e, 0x6b, 0x50,
-	0x10, 0x3e, 0x34, 0xa0, 0xf8, 0x4b, 0xf3, 0x89, 0x92, 0xec, 0xeb, 0x48, 0xaf, 0x8c, 0x0b, 0xf0,
-	0x27, 0xb4, 0xa3, 0x7f, 0xa4, 0x06, 0x9a, 0x8a, 0xf7, 0x57, 0x54, 0x7c, 0x07, 0xde, 0x4c, 0xe4,
-	0xff, 0x03, 0xc3, 0x2b, 0xd8, 0xea, 0x56, 0xb7, 0xf2, 0xfa, 0x77, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0x96, 0xc9, 0x0e, 0xa1, 0xdc, 0x02, 0x00, 0x00,
+	// 561 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0x55, 0x3e, 0x9a, 0x8f, 0x31, 0x0d, 0x64, 0x04, 0x95, 0x31, 0x15, 0x8a, 0x56, 0x1c, 0xa2,
+	0x54, 0xb5, 0xd5, 0x02, 0x12, 0x8a, 0x04, 0x42, 0xd0, 0xa6, 0x8a, 0xda, 0xf4, 0x10, 0xe8, 0x0f,
+	0x70, 0xea, 0xad, 0x65, 0x35, 0xb1, 0x5d, 0xef, 0x06, 0xa9, 0x82, 0x5e, 0xf8, 0x0b, 0xfc, 0x34,
+	0x8e, 0x5c, 0xf9, 0x21, 0xc8, 0xb3, 0x6b, 0x07, 0xe2, 0x46, 0x55, 0xca, 0xc9, 0x9a, 0x7d, 0x33,
+	0xef, 0xbd, 0xd9, 0x7d, 0x86, 0x76, 0x3c, 0x71, 0xfc, 0x24, 0x3e, 0x97, 0xae, 0xb8, 0xb4, 0xe3,
+	0x24, 0x92, 0x11, 0x36, 0xb2, 0xda, 0xda, 0xf6, 0xa3, 0xc8, 0x9f, 0x72, 0xc7, 0x8d, 0x03, 0xc7,
+	0x0d, 0xc3, 0x48, 0xba, 0x32, 0x88, 0x42, 0xa1, 0xfa, 0xac, 0x67, 0x1a, 0xa5, 0x6a, 0x32, 0xbf,
+	0x70, 0xf8, 0x2c, 0x96, 0xd7, 0x0a, 0x64, 0x17, 0x50, 0x3d, 0x13, 0x3c, 0xc1, 0x16, 0x94, 0x87,
+	0x9e, 0x59, 0xea, 0x94, 0xba, 0x95, 0x71, 0x79, 0xe8, 0xe1, 0x36, 0x34, 0x07, 0x41, 0x22, 0xe4,
+	0xa9, 0x3b, 0xe3, 0x66, 0xb9, 0x53, 0xea, 0x36, 0xc7, 0x8b, 0x03, 0xb4, 0xa0, 0x71, 0xe2, 0x6a,
+	0xb0, 0x42, 0x60, 0x5e, 0xe3, 0x63, 0xd8, 0x38, 0x9c, 0xb9, 0xc1, 0xd4, 0xac, 0x12, 0xa0, 0x0a,
+	0x76, 0x0c, 0xf5, 0x11, 0x17, 0xc2, 0xf5, 0x79, 0x41, 0xca, 0xcc, 0x21, 0x2d, 0x94, 0x77, 0x6e,
+	0x41, 0x2d, 0x35, 0x37, 0xf4, 0x48, 0xa4, 0x32, 0xd6, 0x15, 0x6b, 0x42, 0x7d, 0xcc, 0xaf, 0xe6,
+	0x5c, 0x48, 0xf6, 0x0a, 0x1e, 0xa4, 0x87, 0x63, 0x2e, 0xe2, 0x28, 0x14, 0x1c, 0x5f, 0xc0, 0x46,
+	0x5a, 0x0b, 0xb3, 0xd4, 0xa9, 0x74, 0x8d, 0xfd, 0x96, 0x9d, 0x5f, 0x1a, 0xb5, 0x29, 0x90, 0xed,
+	0x81, 0xa1, 0xa6, 0x88, 0x04, 0x19, 0x54, 0xe7, 0x82, 0x27, 0xe4, 0xa9, 0x38, 0x43, 0x18, 0x7b,
+	0x0f, 0x0f, 0xb5, 0xad, 0x5c, 0x6b, 0x17, 0x1a, 0x33, 0x75, 0x94, 0xc9, 0xb5, 0x17, 0xa3, 0x59,
+	0x73, 0xde, 0xc2, 0xde, 0x42, 0x2b, 0x67, 0x50, 0xba, 0x3b, 0x50, 0xd7, 0xa8, 0x96, 0xbe, 0x65,
+	0x3e, 0xeb, 0xd8, 0xff, 0x55, 0x57, 0xa6, 0x3f, 0xf1, 0xe4, 0x4b, 0x70, 0xce, 0x71, 0x00, 0xcd,
+	0x93, 0x40, 0x48, 0x5a, 0x08, 0xff, 0x1a, 0xd4, 0xe4, 0xd6, 0xd6, 0xd2, 0x1a, 0xda, 0x35, 0x6b,
+	0x7d, 0xff, 0xf9, 0xfb, 0x47, 0xb9, 0x81, 0x35, 0x67, 0x4e, 0xa3, 0x47, 0x00, 0x1f, 0x13, 0xee,
+	0x4a, 0xae, 0x72, 0xf0, 0xef, 0x54, 0xca, 0x42, 0xe9, 0xb1, 0xb3, 0xf4, 0xd8, 0x87, 0x69, 0x7a,
+	0x58, 0x9b, 0x58, 0x0c, 0xa6, 0x59, 0xfa, 0xa5, 0x1e, 0x7e, 0x06, 0xe3, 0x2c, 0xf6, 0x5c, 0xc9,
+	0xbd, 0x0f, 0xd7, 0xc3, 0x03, 0x7c, 0xb2, 0xac, 0xaf, 0x6c, 0x2d, 0x09, 0xb0, 0xe7, 0x44, 0x64,
+	0x5a, 0x8f, 0x14, 0x91, 0xf3, 0x35, 0xfd, 0xd8, 0x43, 0xef, 0xa6, 0x4f, 0xf7, 0x8e, 0xa7, 0x60,
+	0x1c, 0xf0, 0x29, 0x5f, 0x93, 0xd5, 0x24, 0x56, 0xec, 0x15, 0x58, 0xf1, 0x18, 0x1a, 0x83, 0x20,
+	0xbc, 0x0f, 0x19, 0x16, 0xc9, 0x2e, 0x01, 0x8e, 0x38, 0x3d, 0xc1, 0x48, 0xf8, 0x68, 0x16, 0x5f,
+	0x4f, 0x33, 0x3e, 0xbd, 0x05, 0xd1, 0xcf, 0xd1, 0x25, 0x72, 0x86, 0x9d, 0x8c, 0x5c, 0xbf, 0xb7,
+	0xad, 0xb2, 0x7e, 0xe3, 0x64, 0xf9, 0xc1, 0x2b, 0x30, 0x52, 0xe7, 0x23, 0xe1, 0x93, 0xf9, 0xd5,
+	0x6a, 0xc5, 0x14, 0xb1, 0xd7, 0xa4, 0xe2, 0xe0, 0xee, 0x5d, 0x2a, 0x0b, 0x24, 0xdd, 0x4f, 0xc2,
+	0xa6, 0xca, 0x46, 0xf6, 0x47, 0xae, 0x16, 0x5d, 0x15, 0x94, 0x3d, 0x52, 0xde, 0x61, 0x77, 0xee,
+	0xd7, 0xcf, 0x92, 0x8e, 0xdf, 0x60, 0x53, 0x05, 0xe9, 0x5e, 0xab, 0xbe, 0x23, 0xc1, 0x37, 0xd6,
+	0x7a, 0xab, 0x2e, 0xd4, 0x25, 0xb4, 0x74, 0xe0, 0xfe, 0xe7, 0xa6, 0x7b, 0xeb, 0xc9, 0x4f, 0x6a,
+	0x74, 0x6d, 0x2f, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0xba, 0xfa, 0xe7, 0xce, 0xe8, 0x05, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -256,11 +395,16 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type UserServiceClient interface {
-	ListUsers(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	ListUsers(ctx context.Context, in *Request, opts ...grpc.CallOption) (*UserResponse, error)
 	CreateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*empty.Empty, error)
-	UpdatedByID(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*User, error)
-	DeletedByID(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*User, error)
-	FindByID(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*User, error)
+	UpdatedByID(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error)
+	DeletedByID(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error)
+	FindByID(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error)
+	GetUserMsg(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	FindMsgByID(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*Message, error)
+	CreateMessage(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	UpdateMsgByID(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*Message, error)
+	DeletedMsgByID(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*Message, error)
 }
 
 type userServiceClient struct {
@@ -271,8 +415,8 @@ func NewUserServiceClient(cc *grpc.ClientConn) UserServiceClient {
 	return &userServiceClient{cc}
 }
 
-func (c *userServiceClient) ListUsers(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
+func (c *userServiceClient) ListUsers(ctx context.Context, in *Request, opts ...grpc.CallOption) (*UserResponse, error) {
+	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, "/grpctask.UserService/ListUsers", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -289,7 +433,7 @@ func (c *userServiceClient) CreateUser(ctx context.Context, in *User, opts ...gr
 	return out, nil
 }
 
-func (c *userServiceClient) UpdatedByID(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*User, error) {
+func (c *userServiceClient) UpdatedByID(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
 	err := c.cc.Invoke(ctx, "/grpctask.UserService/UpdatedByID", in, out, opts...)
 	if err != nil {
@@ -298,7 +442,7 @@ func (c *userServiceClient) UpdatedByID(ctx context.Context, in *EditRequest, op
 	return out, nil
 }
 
-func (c *userServiceClient) DeletedByID(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*User, error) {
+func (c *userServiceClient) DeletedByID(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
 	err := c.cc.Invoke(ctx, "/grpctask.UserService/DeletedByID", in, out, opts...)
 	if err != nil {
@@ -307,7 +451,7 @@ func (c *userServiceClient) DeletedByID(ctx context.Context, in *EditRequest, op
 	return out, nil
 }
 
-func (c *userServiceClient) FindByID(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*User, error) {
+func (c *userServiceClient) FindByID(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
 	err := c.cc.Invoke(ctx, "/grpctask.UserService/FindByID", in, out, opts...)
 	if err != nil {
@@ -316,33 +460,98 @@ func (c *userServiceClient) FindByID(ctx context.Context, in *EditRequest, opts 
 	return out, nil
 }
 
+func (c *userServiceClient) GetUserMsg(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, "/grpctask.UserService/GetUserMsg", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) FindMsgByID(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*Message, error) {
+	out := new(Message)
+	err := c.cc.Invoke(ctx, "/grpctask.UserService/FindMsgByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) CreateMessage(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/grpctask.UserService/CreateMessage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) UpdateMsgByID(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*Message, error) {
+	out := new(Message)
+	err := c.cc.Invoke(ctx, "/grpctask.UserService/UpdateMsgByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) DeletedMsgByID(ctx context.Context, in *MessageRequest, opts ...grpc.CallOption) (*Message, error) {
+	out := new(Message)
+	err := c.cc.Invoke(ctx, "/grpctask.UserService/DeletedMsgByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 type UserServiceServer interface {
-	ListUsers(context.Context, *Request) (*Response, error)
+	ListUsers(context.Context, *Request) (*UserResponse, error)
 	CreateUser(context.Context, *User) (*empty.Empty, error)
-	UpdatedByID(context.Context, *EditRequest) (*User, error)
-	DeletedByID(context.Context, *EditRequest) (*User, error)
-	FindByID(context.Context, *EditRequest) (*User, error)
+	UpdatedByID(context.Context, *UserRequest) (*User, error)
+	DeletedByID(context.Context, *UserRequest) (*User, error)
+	FindByID(context.Context, *UserRequest) (*User, error)
+	GetUserMsg(context.Context, *MessageRequest) (*MessageResponse, error)
+	FindMsgByID(context.Context, *MessageRequest) (*Message, error)
+	CreateMessage(context.Context, *MessageRequest) (*empty.Empty, error)
+	UpdateMsgByID(context.Context, *MessageRequest) (*Message, error)
+	DeletedMsgByID(context.Context, *MessageRequest) (*Message, error)
 }
 
 // UnimplementedUserServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedUserServiceServer struct {
 }
 
-func (*UnimplementedUserServiceServer) ListUsers(ctx context.Context, req *Request) (*Response, error) {
+func (*UnimplementedUserServiceServer) ListUsers(ctx context.Context, req *Request) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
 func (*UnimplementedUserServiceServer) CreateUser(ctx context.Context, req *User) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (*UnimplementedUserServiceServer) UpdatedByID(ctx context.Context, req *EditRequest) (*User, error) {
+func (*UnimplementedUserServiceServer) UpdatedByID(ctx context.Context, req *UserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatedByID not implemented")
 }
-func (*UnimplementedUserServiceServer) DeletedByID(ctx context.Context, req *EditRequest) (*User, error) {
+func (*UnimplementedUserServiceServer) DeletedByID(ctx context.Context, req *UserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletedByID not implemented")
 }
-func (*UnimplementedUserServiceServer) FindByID(ctx context.Context, req *EditRequest) (*User, error) {
+func (*UnimplementedUserServiceServer) FindByID(ctx context.Context, req *UserRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindByID not implemented")
+}
+func (*UnimplementedUserServiceServer) GetUserMsg(ctx context.Context, req *MessageRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserMsg not implemented")
+}
+func (*UnimplementedUserServiceServer) FindMsgByID(ctx context.Context, req *MessageRequest) (*Message, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindMsgByID not implemented")
+}
+func (*UnimplementedUserServiceServer) CreateMessage(ctx context.Context, req *MessageRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateMessage not implemented")
+}
+func (*UnimplementedUserServiceServer) UpdateMsgByID(ctx context.Context, req *MessageRequest) (*Message, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMsgByID not implemented")
+}
+func (*UnimplementedUserServiceServer) DeletedMsgByID(ctx context.Context, req *MessageRequest) (*Message, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletedMsgByID not implemented")
 }
 
 func RegisterUserServiceServer(s *grpc.Server, srv UserServiceServer) {
@@ -386,7 +595,7 @@ func _UserService_CreateUser_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _UserService_UpdatedByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EditRequest)
+	in := new(UserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -398,13 +607,13 @@ func _UserService_UpdatedByID_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/grpctask.UserService/UpdatedByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).UpdatedByID(ctx, req.(*EditRequest))
+		return srv.(UserServiceServer).UpdatedByID(ctx, req.(*UserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _UserService_DeletedByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EditRequest)
+	in := new(UserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -416,13 +625,13 @@ func _UserService_DeletedByID_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/grpctask.UserService/DeletedByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).DeletedByID(ctx, req.(*EditRequest))
+		return srv.(UserServiceServer).DeletedByID(ctx, req.(*UserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _UserService_FindByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EditRequest)
+	in := new(UserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -434,7 +643,97 @@ func _UserService_FindByID_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/grpctask.UserService/FindByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).FindByID(ctx, req.(*EditRequest))
+		return srv.(UserServiceServer).FindByID(ctx, req.(*UserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_GetUserMsg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetUserMsg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpctask.UserService/GetUserMsg",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetUserMsg(ctx, req.(*MessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_FindMsgByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).FindMsgByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpctask.UserService/FindMsgByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).FindMsgByID(ctx, req.(*MessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_CreateMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).CreateMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpctask.UserService/CreateMessage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).CreateMessage(ctx, req.(*MessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_UpdateMsgByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).UpdateMsgByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpctask.UserService/UpdateMsgByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).UpdateMsgByID(ctx, req.(*MessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_DeletedMsgByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).DeletedMsgByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpctask.UserService/DeletedMsgByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).DeletedMsgByID(ctx, req.(*MessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -462,6 +761,26 @@ var _UserService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindByID",
 			Handler:    _UserService_FindByID_Handler,
+		},
+		{
+			MethodName: "GetUserMsg",
+			Handler:    _UserService_GetUserMsg_Handler,
+		},
+		{
+			MethodName: "FindMsgByID",
+			Handler:    _UserService_FindMsgByID_Handler,
+		},
+		{
+			MethodName: "CreateMessage",
+			Handler:    _UserService_CreateMessage_Handler,
+		},
+		{
+			MethodName: "UpdateMsgByID",
+			Handler:    _UserService_UpdateMsgByID_Handler,
+		},
+		{
+			MethodName: "DeletedMsgByID",
+			Handler:    _UserService_DeletedMsgByID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

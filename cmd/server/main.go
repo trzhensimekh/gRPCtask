@@ -22,7 +22,9 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer(mw.WithUnaryServerChain(middleware.LoggerMiddleware))
-	pb.RegisterUserServiceServer(s, server.NewServer(data.Open()))
+	srv:=server.NewServer(data.Open())
+	pb.RegisterUserServiceServer(s,srv )
+	defer srv.CloseDb()
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)

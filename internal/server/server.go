@@ -11,24 +11,28 @@ import (
 )
 
 type server struct {
-	d *sql.DB
+	db *sql.DB
 }
 
 func NewServer(db *sql.DB, err error) *server {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &server{d:db}
+	return &server{db:db}
 }
 
-func (s *server) ListUsers(ctx context.Context, in *pb.Request) (*pb.Response, error) {
+func (s *server) CloseDb(){
+	s.db.Close()
+}
+
+func (s *server) ListUsers(ctx context.Context, in *pb.Request) (*pb.UserResponse, error) {
 	var users []*pb.User
-	db,err := data.Open()
+/*	db,err := data.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
-	rows, err := db.Query(
+	defer db.Close() */
+	rows, err := s.db.Query(
 		"SELECT * FROM USERS")
 	if err != nil {
 		return nil, err
@@ -49,7 +53,7 @@ func (s *server) ListUsers(ctx context.Context, in *pb.Request) (*pb.Response, e
 	for i, value:= range users {
 		fmt.Println(i,value)
 	}
-	return &pb.Response{Users: users}, nil
+	return &pb.UserResponse{Users: users}, nil
 }
 
 func (s *server)CreateUser(ctx context.Context, u *pb.User) (*empty.Empty, error)  {
@@ -69,7 +73,7 @@ func (s *server)CreateUser(ctx context.Context, u *pb.User) (*empty.Empty, error
 	return &empty.Empty{}, nil
 }
 
-func (s *server)UpdatedByID(ctx context.Context, rq *pb.EditRequest) (*pb.User, error) {
+func (s *server)UpdatedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
 	db,err := data.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -93,7 +97,7 @@ func (s *server)UpdatedByID(ctx context.Context, rq *pb.EditRequest) (*pb.User, 
 	return u, nil
 }
 
-func (s *server)DeletedByID(ctx context.Context, rq *pb.EditRequest) (*pb.User, error) {
+func (s *server)DeletedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
 	db,err := data.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -114,7 +118,7 @@ func (s *server)DeletedByID(ctx context.Context, rq *pb.EditRequest) (*pb.User, 
 	return u, nil
 }
 
-func (s *server) FindByID(ctx context.Context, rq *pb.EditRequest) (*pb.User, error){
+func (s *server) FindByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error){
 	db,err := data.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -134,3 +138,93 @@ func (s *server) FindByID(ctx context.Context, rq *pb.EditRequest) (*pb.User, er
 	}
 	return u, nil
 }
+
+func (s *server) GetUserMsg(ctx context.Context, rq *pb.MessageRequest) (*pb.MessageResponse, error) {
+	db,err := data.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	var msgs []*pb.Message
+	msg:=rq.GetMessage()
+	rows, err := db.Query(
+		"SELECT * FROM messages WHERE user_id=$1",
+		msg.UserId)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		m := new(pb.Message)
+		err := rows.Scan(
+			&m.Id,
+			&m.Message,
+			&m.UserId,
+		)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		msgs = append(msgs, m)
+	}
+	return &pb.MessageResponse{Messages:msgs}, nil
+}
+
+func (s *server) FindMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.Message, error) {
+	m:=rq.GetMessage()
+	if err := s.db.QueryRow(
+		"SELECT id, message, user_id FROM messages WHERE id=$1",
+		m.Id,
+	).Scan(
+		&m.Id,
+		&m.Message,
+		&m.UserId,
+	); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (s *server) CreateMessage(ctx context.Context, rq *pb.MessageRequest) (*empty.Empty, error) {
+	m:=rq.GetMessage()
+	fmt.Println(m.Message)
+	if err := s.db.QueryRow(
+		"INSERT INTO messages(message, user_id) VALUES ($1,$2) RETURNING id",
+		m.Message,
+		m.UserId,
+	).Scan(&m.Id); err != nil {
+		return nil, err
+	}
+	return &empty.Empty{}, nil
+}
+
+func (s *server) UpdateMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.Message, error) {
+	m:=rq.GetMessage()
+	if err := s.db.QueryRow(
+		"UPDATE messages SET message=$1, user_id=$2  WHERE id=$3 RETURNING id, message, user_id",
+		m.Message,
+		m.UserId,
+		m.Id,
+	).Scan(
+		&m.Id,
+		&m.Message,
+		&m.UserId,
+	); err != nil {
+		return nil,err
+	}
+	return m, nil
+}
+
+func (s *server) DeletedMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.Message, error) {
+	m:=rq.GetMessage()
+	if err := s.db.QueryRow(
+		"DELETE FROM messages WHERE id=$1 RETURNING id, message, user_id",
+		m.Id,
+	).Scan(
+		&m.Id,
+		&m.Message,
+		&m.UserId,
+	); err != nil {
+		return nil,err
+	}
+	return m, nil
+}
+
