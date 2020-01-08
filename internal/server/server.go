@@ -27,11 +27,6 @@ func (s *server) CloseDb(){
 
 func (s *server) ListUsers(ctx context.Context, in *pb.Request) (*pb.UserResponse, error) {
 	var users []*pb.User
-/*	db,err := data.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close() */
 	rows, err := s.db.Query(
 		"SELECT * FROM USERS")
 	if err != nil {
@@ -50,19 +45,12 @@ func (s *server) ListUsers(ctx context.Context, in *pb.Request) (*pb.UserRespons
 		}
 		users = append(users, u)
 	}
-	for i, value:= range users {
-		fmt.Println(i,value)
-	}
 	return &pb.UserResponse{Users: users}, nil
 }
 
 func (s *server)CreateUser(ctx context.Context, u *pb.User) (*empty.Empty, error)  {
-	db,err := data.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-	if err := db.QueryRow(
+
+	if err := s.db.QueryRow(
 		"INSERT INTO users(firstname, lastname, email) VALUES ($1,$2,$3) RETURNING id",
 		u.FirstName,
 		u.LastName,
@@ -98,13 +86,9 @@ func (s *server)UpdatedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, 
 }
 
 func (s *server)DeletedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
-	db,err := data.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+
 	u:=rq.GetUser()
-	if err := db.QueryRow(
+	if err := s.db.QueryRow(
 		"DELETE FROM users WHERE id=$1 RETURNING id, firstname ,lastname, email",
 		u.Id,
 	).Scan(
@@ -119,13 +103,8 @@ func (s *server)DeletedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, 
 }
 
 func (s *server) FindByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error){
-	db,err := data.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
 	u:=rq.GetUser()
-	if err := db.QueryRow(
+	if err := s.db.QueryRow(
 		"SELECT id, firstname, lastname, email FROM USERS WHERE id=$1",
 		u.Id,
 	).Scan(
@@ -140,14 +119,9 @@ func (s *server) FindByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, er
 }
 
 func (s *server) GetUserMsg(ctx context.Context, rq *pb.MessageRequest) (*pb.MessageResponse, error) {
-	db,err := data.Open()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
 	var msgs []*pb.Message
 	msg:=rq.GetMessage()
-	rows, err := db.Query(
+	rows, err := s.db.Query(
 		"SELECT * FROM messages WHERE user_id=$1",
 		msg.UserId)
 	if err != nil {
