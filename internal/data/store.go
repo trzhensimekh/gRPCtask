@@ -7,7 +7,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-
 func Open() (*sql.DB, error) {
 	config := NewConfig()
 	_, err := toml.DecodeFile("configs/apiserver.toml", config)

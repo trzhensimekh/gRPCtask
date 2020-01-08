@@ -18,10 +18,10 @@ func NewServer(db *sql.DB, err error) *server {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &server{db:db}
+	return &server{db: db}
 }
 
-func (s *server) CloseDb(){
+func (s *server) CloseDb() {
 	s.db.Close()
 }
 
@@ -48,7 +48,7 @@ func (s *server) ListUsers(ctx context.Context, in *pb.Request) (*pb.UserRespons
 	return &pb.UserResponse{Users: users}, nil
 }
 
-func (s *server)CreateUser(ctx context.Context, u *pb.User) (*empty.Empty, error)  {
+func (s *server) CreateUser(ctx context.Context, u *pb.User) (*empty.Empty, error) {
 
 	if err := s.db.QueryRow(
 		"INSERT INTO users(firstname, lastname, email) VALUES ($1,$2,$3) RETURNING id",
@@ -61,13 +61,13 @@ func (s *server)CreateUser(ctx context.Context, u *pb.User) (*empty.Empty, error
 	return &empty.Empty{}, nil
 }
 
-func (s *server)UpdatedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
-	db,err := data.Open()
+func (s *server) UpdatedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
+	db, err := data.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
-	u:=rq.GetUser()
+	u := rq.GetUser()
 	if err := db.QueryRow(
 		"UPDATE USERS SET firstname=$1 ,lastname=$2, email=$3  WHERE id=$4 RETURNING id, firstname ,lastname, email",
 		u.FirstName,
@@ -85,9 +85,9 @@ func (s *server)UpdatedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, 
 	return u, nil
 }
 
-func (s *server)DeletedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
+func (s *server) DeletedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
 
-	u:=rq.GetUser()
+	u := rq.GetUser()
 	if err := s.db.QueryRow(
 		"DELETE FROM users WHERE id=$1 RETURNING id, firstname ,lastname, email",
 		u.Id,
@@ -102,8 +102,8 @@ func (s *server)DeletedByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, 
 	return u, nil
 }
 
-func (s *server) FindByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error){
-	u:=rq.GetUser()
+func (s *server) FindByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, error) {
+	u := rq.GetUser()
 	if err := s.db.QueryRow(
 		"SELECT id, firstname, lastname, email FROM USERS WHERE id=$1",
 		u.Id,
@@ -120,7 +120,7 @@ func (s *server) FindByID(ctx context.Context, rq *pb.UserRequest) (*pb.User, er
 
 func (s *server) GetUserMsg(ctx context.Context, rq *pb.MessageRequest) (*pb.MessageResponse, error) {
 	var msgs []*pb.Message
-	msg:=rq.GetMessage()
+	msg := rq.GetMessage()
 	rows, err := s.db.Query(
 		"SELECT * FROM messages WHERE user_id=$1",
 		msg.UserId)
@@ -139,11 +139,11 @@ func (s *server) GetUserMsg(ctx context.Context, rq *pb.MessageRequest) (*pb.Mes
 		}
 		msgs = append(msgs, m)
 	}
-	return &pb.MessageResponse{Messages:msgs}, nil
+	return &pb.MessageResponse{Messages: msgs}, nil
 }
 
 func (s *server) FindMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.Message, error) {
-	m:=rq.GetMessage()
+	m := rq.GetMessage()
 	if err := s.db.QueryRow(
 		"SELECT id, message, user_id FROM messages WHERE id=$1",
 		m.Id,
@@ -158,7 +158,7 @@ func (s *server) FindMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.Me
 }
 
 func (s *server) CreateMessage(ctx context.Context, rq *pb.MessageRequest) (*empty.Empty, error) {
-	m:=rq.GetMessage()
+	m := rq.GetMessage()
 	fmt.Println(m.Message)
 	if err := s.db.QueryRow(
 		"INSERT INTO messages(message, user_id) VALUES ($1,$2) RETURNING id",
@@ -171,7 +171,7 @@ func (s *server) CreateMessage(ctx context.Context, rq *pb.MessageRequest) (*emp
 }
 
 func (s *server) UpdateMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.Message, error) {
-	m:=rq.GetMessage()
+	m := rq.GetMessage()
 	if err := s.db.QueryRow(
 		"UPDATE messages SET message=$1, user_id=$2  WHERE id=$3 RETURNING id, message, user_id",
 		m.Message,
@@ -182,13 +182,13 @@ func (s *server) UpdateMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.
 		&m.Message,
 		&m.UserId,
 	); err != nil {
-		return nil,err
+		return nil, err
 	}
 	return m, nil
 }
 
 func (s *server) DeletedMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb.Message, error) {
-	m:=rq.GetMessage()
+	m := rq.GetMessage()
 	if err := s.db.QueryRow(
 		"DELETE FROM messages WHERE id=$1 RETURNING id, message, user_id",
 		m.Id,
@@ -197,8 +197,7 @@ func (s *server) DeletedMsgByID(ctx context.Context, rq *pb.MessageRequest) (*pb
 		&m.Message,
 		&m.UserId,
 	); err != nil {
-		return nil,err
+		return nil, err
 	}
 	return m, nil
 }
-
