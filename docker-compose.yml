@@ -12,5 +12,34 @@ services:
     volumes:
       - ./dbscripts:/docker-entrypoint-initdb.d
       - postgres-data:/var/lib/postgresql/data
+  svc:
+    image: golang:latest
+    container_name: "svc"
+    working_dir: /go/src/app
+    command: go run cmd/server/main.go
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./:/go/src/app
+    links:
+      - db
+    environment:
+      PORT: 8080
+  gw:
+    image: golang:latest
+    container_name: "gw"
+    working_dir: /go/src/app
+    command: go run cmd/gateway/main.go
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/go/src/app
+    links:
+      - db
+      - svc
+    environment:
+      PORT: 8080
 volumes:
   postgres-data:
+
+

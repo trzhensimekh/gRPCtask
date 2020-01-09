@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"context"
-	//"fmt"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus/ctxlogrus"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"

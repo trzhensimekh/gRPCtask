@@ -27,7 +27,7 @@ func run(ep string) error {
 }
 
 func main() {
-	endpoint := flag.String("endpoint", "localhost:8081", "address")
+	endpoint := flag.String("endpoint", "svc:8081", "address")
 	flag.Parse()
 
 	defer glog.Flush()
